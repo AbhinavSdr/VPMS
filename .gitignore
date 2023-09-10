@@ -4,4 +4,4 @@
 /app/ROUTESBACKUP
 /app/templates/UINDEXBKUP
 /app/static
-*.txt
+user_pass.txt
