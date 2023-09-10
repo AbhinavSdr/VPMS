@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html class="dark">
+
+<head>
+  {% if title %}
+  <title>{{ title }} - VPMS</title>
+  {% else %}
+  <title>Welcome to VPMS</title>
+  {% endif %}
+  <link href="https://unpkg.com/tailwindcss@2.0.1/dist/tailwind-dark.min.css" rel="stylesheet">
+  
+  <link rel="mask-icon" href="{{ url_for('static', filename='safari-pinned-tab.svg') }}" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+  <div class="flex flex-col h-screen justify-between">
+    {% if title == 'Sign In' %}
+    <header class="text-gray-700 body-font">
+      <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="/">
+          <span class="ml-3 text-xl">VPMS</span>
+        </a>
+    </header>
+    {% elif current_user.is_anonymous %}
+    <header class="text-gray-700 body-font">
+      <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="/">
+          <span class="ml-3 text-xl">VPMS</span>
+        </a>
+        <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center"></nav>
+        <button
+          class="inline-flex items-center text-white bg-indigo-500 border-0 py-1 px-3 focus:outline-none hover:bg-indigo-600 rounded text-base mt-4 md:mt-0"
+          onclick="location.href='/login'">Admin-Login
+        </button>
+      </div>
+    </header>
+    {% elif current_user.role == "Admin" %}
+    <header class="text-gray-700 body-font">
+      <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="/">
+          <span class="ml-3 text-xl">VPMS</span>
+        </a>
+        <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+          <a class="mr-5 hover:text-gray-900" href="/entry">Entry</a>
+          <a class="mr-5 hover:text-gray-900" href="/exit">Exit</a>
+          <a class="mr-5 hover:text-gray-900" href="/history">History</a>
+          <a class="mr-5 hover:text-gray-900" href="/register">Register</a>
+          <a class="mr-5 hover:text-gray-900" href="/manage-user">Manage User</a>
+          <a class="mr-5 hover:text-gray-900" href="/manage-parking">Manage Parking</a>
+          <a class="mr-5 hover:text-gray-900" href="/transactions">Transactions</a>
+        </nav>
+        <button class="inline-flex items-center text-white bg-indigo-500 border-0 py-1 px-3 focus:outline-none hover:bg-indigo-600 rounded text-base mt-4 md:mt-0"
+        onclick="location.href='/logout'">Logout</button>
+      </div>
+    </header>
+    {% elif current_user.role == "User" %}
+    <header class="text-gray-700 body-font">
+      <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="/">
+          <span class="ml-3 text-xl">VPMS</span>
+        </a>
+        <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+        </nav>
+        <button
+          class="inline-flex items-center text-white bg-indigo-500 border-0 py-1 px-3 focus:outline-none hover:bg-indigo-600 rounded text-base mt-4 md:mt-0"
+          onclick="location.href='/dues'", style="margin-right:10px">Dues</button>
+        <button
+          class="inline-flex items-center text-white bg-indigo-500 border-0 py-1 px-3 focus:outline-none hover:bg-indigo-600 rounded text-base mt-4 md:mt-0"
+          onclick="location.href='/logout'">Logout</button>
+      </div>
+    </header>
+    {% elif current_user.is_authenticated %}
+    <header class="text-gray-700 body-font">
+      <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="/">
+          <span class="ml-3 text-xl">VPMS</span>
+        </a>
+        <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+          <a class="mr-5 hover:text-gray-900" href="/history">History</a>
+        </nav>
+        <button
+          class="inline-flex items-center text-white bg-indigo-500 border-0 py-1 px-3 focus:outline-none hover:bg-indigo-600 rounded text-base mt-4 md:mt-0"
+          onclick="location.href='/logout'">Logout</button>
+      </div>
+    </header>
+    {% endif %}
+    <main class="mb-auto">
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="text-gray-700 body-font">
+      <div class="container px-5 py-5 mx-auto flex items-center sm:flex-row flex-col">
+        <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900" href="/">
+          <span class="ml-3 text-xl">VPMS</span>
+        </a>
+        
+        </p>
+        <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+          
+            <br>
+          </p>
+        </span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

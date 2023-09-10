@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<section class="text-gray-700 body-font">
+  <div class="flex mb-4">
+      {% for message in messages %}
+      {% if message == "Details Updated Successfully!" %}
+      <div class="container mx-auto flex flex-wrap bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative p-5 flex-col md:flex-row items-center" role="alert">
+            <span class="block sm:inline">{{ message }}</span>
+      </div>
+      {% else %}
+      <div class="container mx-auto flex flex-wrap bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative p-5 flex-col md:flex-row items-center" role="alert">
+            <span class="block sm:inline">{{ message }}</span>
+      </div>
+      {% endif %}
+      {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endwith %}
+
+<section class="text-gray-700 body-font">
+    <div class="container px-5 py-10 mx-auto">
+        <div class="flex flex-col text-center w-full mb-20">
+            <h1 class="text-2xl font-medium title-font mb-4 text-gray-900 tracking-widest">MANAGE USERS</h1>
+        </div>
+        <div class="flex flex-wrap -m-4">
+            {% for user in all_user %}
+
+            <div class="p-4 lg:w-1/2">
+                <div
+                    class="h-full flex shadow-xl sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left">
+                    <div class="flex-grow sm:pl-8">
+                        <h2 class="title-font font-medium text-lg text-gray-900">{{ user.name }}</h2>
+                        <h3 class="text-gray-500 mb-3">{{ user.role }}</h3>
+                        <p class="mb-4">Username: {{ user.username }}
+                            <br>
+                            Email: {{ user.email }}
+                        </p>
+                        <span class="inline-flex">
+                            {% if user.role != "Admin" %}
+                            <a class="transition duration-200 text-gray-500 hover:text-red-500" href="/manage-user/delete/{{ user.id }}/{{user.role}}">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </a>
+                            {% else %}
+                            <p class="mb-4 italic font-bold text-red-500">*No changes can be made to Admin!*</p>
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<section class="text-gray-700 body-font">
+  <div class="flex mb-4">
+      {% for message in messages %}
+      {% if message == "Phone number didn\'t matched!" %}
+      <div class="container mx-auto flex flex-wrap bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative p-5 flex-col md:flex-row items-center" role="alert">
+            <span class="block sm:inline">{{ message }}</span>
+      </div>
+      {% else %}
+      <div class="container mx-auto flex flex-wrap bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative p-5 flex-col md:flex-row items-center" role="alert">
+            <span class="block sm:inline">{{ message }}</span>
+      </div>
+      {% endif %}
+      {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endwith %}
+<section class="text-gray-700 body-font">
+    <div class="flex mb-4">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="flex items-center flex-wrap -m-4 text-center">
+                <div class="flex-1">
+                    <p>Registration Number:</p>
+                    <input type="text" id="RegNo" onkeyup="getRegNo()" placeholder="Search for Registration"
+                        title="Type in a name"
+                        class="w-1/2 bg-white rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="text-gray-700 body-font">
+    {% if exitData|length < 1 %}
+    <h4 class="text-2xl font-medium title-font mb-4 text-gray-900 tracking-widest" style="text-align: center">NO VEHICLES PARKED!</h4>
+    {% else %}
+    <div class="container mx-auto flex">
+        <table id="myTable" class="text-left w-full border-collapse">
+            <thead>
+                <tr>
+                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Registration Number</th>
+                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Name</th>
+                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Entry Time</th>
+                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Exit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in exitData %}
+                <tr class="hover:bg-grey-lighter">
+                    <td class="py-4 px-6 border-b border-grey-light">{{ data.rc }}</td>
+                    <td class="py-4 px-6 border-b border-grey-light">{{ data.name }}</td>
+                    <td class="py-4 px-6 border-b border-grey-light">{{ data.entry_time }}</td>
+                    <td class="py-4 px-6 border-b border-grey-light"><a class="text-indigo-500 inline-flex items-center" href="/exit/{{ data.id }}">Exit {{ data.rc }}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</section>
+<script type="text/javascript">
+    function getRegNo() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("RegNo");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+{% endblock %}
