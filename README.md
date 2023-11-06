@@ -1,5 +1,3 @@
-Vehicle Parking Management Website
-
-Made using Python[Flask] 
+Vehicle Parking Management Website | Python[Flask]
 
 Work in Progress
